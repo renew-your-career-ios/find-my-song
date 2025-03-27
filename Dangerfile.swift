@@ -16,10 +16,10 @@ struct Grader {
         let storyboardFiles = danger.git.modifiedFiles.filter({ $0.hasSuffix(".storyboard")})
 
         if storyboardFiles.count == 0, !storyboardFiles.contains(where: { $0.lowercased() == "main.storyboard" }) {
-            danger.warn("O desafio da semana inclui mudanças no Main storyboard.")
+            danger.fail("O desafio da semana inclui mudanças no Main storyboard.")
         }
 
-        guard let projectFile = danger.git.modifiedFiles.filter({$0.hasSuffix(".pbxproj")}).first else {
+        guard danger.git.modifiedFiles.filter({$0.hasSuffix(".pbxproj")}).count > 0 else {
             danger.fail("O desafio da semana inclui alterar o deployment target para iOS 16")
             return
         }
