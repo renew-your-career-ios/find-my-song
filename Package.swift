@@ -1,15 +1,22 @@
-// swift-tools-version:4.2
+// swift-tools-version: 6.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
 
 let package = Package(
-    name: "findMySong",
+    name: "Dangerfile",
+    platforms: [.macOS(.v14)],
+    products: [.library(name: "DangerDeps", type: .dynamic, targets: ["Dangerfile"])],
     dependencies: [
-      .package(url: "https://github.com/danger/swift.git", from: "1.0.0")
+        .package(url: "https://github.com/danger/swift.git", exact: "3.21.1"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", exact: "0.58.0")
     ],
     targets: [
-        // This is just an arbitrary Swift file in our app, that has
-        // no dependencies outside of Foundation, the dependencies section
-        // ensures that the library for Danger gets build also.
-        .target(name: "fmSong", dependencies: ["Danger"], path: "FindMySong", sources: ["Dummy.swift"]),
+        .target(
+            name: "Dangerfile",
+            dependencies: [
+                .product(name: "Danger", package: "swift")
+            ]
+        ),
     ]
 )

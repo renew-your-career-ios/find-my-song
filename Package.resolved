@@ -1,88 +1,60 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Files",
-        "repositoryURL": "https://github.com/JohnSundell/Files.git",
-        "state": {
-          "branch": null,
-          "revision": "a84615f4558151fab52ac38df697ce2442991f93",
-          "version": "2.3.0"
-        }
-      },
-      {
-        "package": "Logger",
-        "repositoryURL": "https://github.com/shibapm/Logger",
-        "state": {
-          "branch": null,
-          "revision": "53c3ecca5abe8cf46697e33901ee774236d94cce",
-          "version": "0.2.3"
-        }
-      },
-      {
-        "package": "Marathon",
-        "repositoryURL": "https://github.com/JohnSundell/Marathon",
-        "state": {
-          "branch": null,
-          "revision": "35b672e05ac411fb104e462fbfd6541f995abc17",
-          "version": "3.3.0"
-        }
-      },
-      {
-        "package": "OctoKit",
-        "repositoryURL": "https://github.com/nerdishbynature/octokit.swift",
-        "state": {
-          "branch": null,
-          "revision": "cd108b387782d8509e64e298cf4800dc47fc40ae",
-          "version": "0.14.0"
-        }
-      },
-      {
-        "package": "Releases",
-        "repositoryURL": "https://github.com/JohnSundell/Releases.git",
-        "state": {
-          "branch": null,
-          "revision": "ea62f33a429185b0ed21344c2355862c5bc4fcce",
-          "version": "4.0.0"
-        }
-      },
-      {
-        "package": "RequestKit",
-        "repositoryURL": "https://github.com/nerdishbynature/RequestKit.git",
-        "state": {
-          "branch": null,
-          "revision": "e4d905fed938807e36d87f28375f88b7c1c26840",
-          "version": "3.3.0"
-        }
-      },
-      {
-        "package": "Require",
-        "repositoryURL": "https://github.com/JohnSundell/Require.git",
-        "state": {
-          "branch": null,
-          "revision": "7cfbd0d8a2dede0e01f6f0d8ab2c7acef1df112e",
-          "version": "2.0.1"
-        }
-      },
-      {
-        "package": "ShellOut",
-        "repositoryURL": "https://github.com/JohnSundell/ShellOut.git",
-        "state": {
-          "branch": null,
-          "revision": "e1577acf2b6e90086d01a6d5e2b8efdaae033568",
-          "version": "2.3.0"
-        }
-      },
-      {
-        "package": "danger-swift",
-        "repositoryURL": "https://github.com/danger/swift.git",
-        "state": {
-          "branch": null,
-          "revision": "33d35bf94f54155be505ffecfca745e4cc1cd0cc",
-          "version": "1.6.5"
-        }
+  "originHash" : "fb9c10af3290b2dad1559ae33f529f88b5e1247c046f798994d51e97ebd725d7",
+  "pins" : [
+    {
+      "identity" : "logger",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/shibapm/Logger",
+      "state" : {
+        "revision" : "53c3ecca5abe8cf46697e33901ee774236d94cce",
+        "version" : "0.2.3"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "octokit.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nerdishbynature/octokit.swift",
+      "state" : {
+        "revision" : "cd108b387782d8509e64e298cf4800dc47fc40ae",
+        "version" : "0.14.0"
+      }
+    },
+    {
+      "identity" : "requestkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nerdishbynature/RequestKit.git",
+      "state" : {
+        "revision" : "e4d905fed938807e36d87f28375f88b7c1c26840",
+        "version" : "3.3.0"
+      }
+    },
+    {
+      "identity" : "swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danger/swift.git",
+      "state" : {
+        "revision" : "bb4faf2c5613960b3de954c631cedd4dc63c3fef",
+        "version" : "3.21.1"
+      }
+    },
+    {
+      "identity" : "swiftlintplugins",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
+      "state" : {
+        "revision" : "fac0c3d3ac69b15ea5382275dbbd5e583a2e05fa",
+        "version" : "0.58.0"
+      }
+    },
+    {
+      "identity" : "version",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/Version",
+      "state" : {
+        "revision" : "303a0f916772545e1e8667d3104f83be708a723c",
+        "version" : "2.1.0"
+      }
+    }
+  ],
+  "version" : 3
 }
