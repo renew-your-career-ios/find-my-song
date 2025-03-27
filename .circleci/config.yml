@@ -21,9 +21,9 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
-      - run:
-          name: Run Danger
-          command: brew install danger/tap/danger-swift && danger-swift ci
+      - run: npm install -g danger
+      - run: swift build
+      - run: swift run danger-swift ci
 
       # Collect XML test results data to show in the UI, and save the same XML
       # files under test-results folder in the Artifacts tab
@@ -33,10 +33,10 @@ jobs:
           path: test_output
           destination: scan-output
       - save_cache:
-          key: v1-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          key: v1-danger-swift-{{ .BuildNum }}
           paths:
+            - .build
             - ~/.danger-swift
-            - /usr/local/Homebrew
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 workflows:
