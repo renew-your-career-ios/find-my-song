@@ -35,6 +35,36 @@
                                     <color key="baseForegroundColor" red="0.50196078431372548" green="0.10980392156862745" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhp-Ln-B6O">
+                                <rect key="frame" x="109.33333333333333" y="310" width="174.33333333333343" height="35.666666666666686"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="find my">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" metaFont="systemBold" size="32"/>
+                                            <font key="NSOriginalFont" metaFont="systemBold" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="charWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" ">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" metaFont="systemBold" size="32"/>
+                                            <font key="NSOriginalFont" metaFont="systemBold" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="charWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Song">
+                                        <attributes>
+                                            <color key="NSColor" red="0.50196078431372548" green="0.10980392156862745" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" metaFont="systemBold" size="32"/>
+                                            <font key="NSOriginalFont" metaFont="systemBold" size="17"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="charWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -42,8 +72,9 @@
                             <constraint firstItem="5TU-S8-8b3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="0CE-su-cGZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4n1-P4-yIJ" secondAttribute="trailing" constant="44" id="2xV-RH-qvA"/>
                             <constraint firstItem="4n1-P4-yIJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="9fd-04-xem"/>
-                            <constraint firstItem="5TU-S8-8b3" firstAttribute="top" secondItem="4n1-P4-yIJ" secondAttribute="bottom" constant="14" id="B8S-BV-5FY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5TU-S8-8b3" secondAttribute="bottom" constant="65" id="R3S-87-Q5T"/>
+                            <constraint firstItem="qhp-Ln-B6O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ugk-4m-84O"/>
+                            <constraint firstItem="qhp-Ln-B6O" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="251" id="a1e-4S-Nft"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5TU-S8-8b3" secondAttribute="trailing" constant="44" id="g1E-9z-iEj"/>
                             <constraint firstItem="5TU-S8-8b3" firstAttribute="top" secondItem="4n1-P4-yIJ" secondAttribute="bottom" constant="28" id="hMp-pg-MiD"/>
                         </constraints>
