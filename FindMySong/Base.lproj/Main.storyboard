@@ -36,7 +36,7 @@
                                 </buttonConfiguration>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhp-Ln-B6O">
-                                <rect key="frame" x="105.00000000000001" y="310" width="183.33333333333337" height="38.333333333333314"/>
+                                <rect key="frame" x="105.00000000000001" y="257" width="183.33333333333337" height="38.333333333333314"/>
                                 <attributedString key="attributedText">
                                     <fragment content="find my">
                                         <attributes>
@@ -71,10 +71,10 @@
                         <constraints>
                             <constraint firstItem="5TU-S8-8b3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="0CE-su-cGZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4n1-P4-yIJ" secondAttribute="trailing" constant="44" id="2xV-RH-qvA"/>
+                            <constraint firstItem="qhp-Ln-B6O" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-150" id="72p-EF-CmG"/>
                             <constraint firstItem="4n1-P4-yIJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="9fd-04-xem"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5TU-S8-8b3" secondAttribute="bottom" constant="65" id="R3S-87-Q5T"/>
                             <constraint firstItem="qhp-Ln-B6O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ugk-4m-84O"/>
-                            <constraint firstItem="qhp-Ln-B6O" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="251" id="a1e-4S-Nft"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5TU-S8-8b3" secondAttribute="trailing" constant="44" id="g1E-9z-iEj"/>
                             <constraint firstItem="5TU-S8-8b3" firstAttribute="top" secondItem="4n1-P4-yIJ" secondAttribute="bottom" constant="14" id="hMp-pg-MiD"/>
                         </constraints>
