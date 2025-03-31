@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4n1-P4-yIJ">
-                                <rect key="frame" x="50" y="640" width="299" height="50"/>
+                                <rect key="frame" x="50" y="654" width="299" height="50"/>
                                 <color key="tintColor" red="0.11764705882352941" green="0.84313725490196079" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Login with Spotify" cornerStyle="capsule" buttonSize="large">
@@ -76,7 +76,7 @@
                             <constraint firstItem="qhp-Ln-B6O" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ugk-4m-84O"/>
                             <constraint firstItem="qhp-Ln-B6O" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="251" id="a1e-4S-Nft"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5TU-S8-8b3" secondAttribute="trailing" constant="44" id="g1E-9z-iEj"/>
-                            <constraint firstItem="5TU-S8-8b3" firstAttribute="top" secondItem="4n1-P4-yIJ" secondAttribute="bottom" constant="28" id="hMp-pg-MiD"/>
+                            <constraint firstItem="5TU-S8-8b3" firstAttribute="top" secondItem="4n1-P4-yIJ" secondAttribute="bottom" constant="14" id="hMp-pg-MiD"/>
                         </constraints>
                     </view>
                 </viewController>
