@@ -36,7 +36,7 @@
                                 </buttonConfiguration>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhp-Ln-B6O">
-                                <rect key="frame" x="109.33333333333333" y="310" width="174.33333333333343" height="35.666666666666686"/>
+                                <rect key="frame" x="105.00000000000001" y="310" width="183.33333333333337" height="38.333333333333314"/>
                                 <attributedString key="attributedText">
                                     <fragment content="find my">
                                         <attributes>
@@ -57,8 +57,8 @@
                                     <fragment content="Song">
                                         <attributes>
                                             <color key="NSColor" red="0.50196078431372548" green="0.10980392156862745" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" metaFont="systemBold" size="32"/>
-                                            <font key="NSOriginalFont" metaFont="systemBold" size="17"/>
+                                            <font key="NSFont" metaFont="system" size="32"/>
+                                            <font key="NSOriginalFont" metaFont="system" size="32"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="charWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
