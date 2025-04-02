@@ -16,6 +16,6 @@ A proposta é construirmos um aplicativo que nos permite buscar e encontrar mús
 
 4. Assine a linha abaixo, com o seu linkedin, para facilitar o rastreio do projeto:
 
-[https://linkedin.com/in/xyz](https://linkedin.com/in/xyz)
+[Gabriely Machado](https://www.linkedin.com/in/gabriely-a-machado/)
 
 _____________________________________

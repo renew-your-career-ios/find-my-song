@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Dangerfile",
-    platforms: [.macOS(.v14)],
+    platforms: [.iOS(.v16), .macOS(.v14)],
     products: [.library(name: "DangerDeps", type: .dynamic, targets: ["Dangerfile"])],
     dependencies: [
         .package(url: "https://github.com/danger/swift.git", exact: "3.21.1"),
