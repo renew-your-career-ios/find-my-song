@@ -1,5 +1,4 @@
 {
-  "originHash" : "fb9c10af3290b2dad1559ae33f529f88b5e1247c046f798994d51e97ebd725d7",
   "pins" : [
     {
       "identity" : "logger",
@@ -15,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nerdishbynature/octokit.swift",
       "state" : {
-        "revision" : "cd108b387782d8509e64e298cf4800dc47fc40ae",
-        "version" : "0.14.0"
+        "revision" : "44192458beb89180c3a3a1245d904aacac8be0ae",
+        "version" : "0.13.0"
       }
     },
     {
@@ -38,6 +37,15 @@
       }
     },
     {
+      "identity" : "swiftformat",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nicklockwood/SwiftFormat",
+      "state" : {
+        "revision" : "468a7d32dedc8d352c191594b3b45d9fd8ba291b",
+        "version" : "0.55.5"
+      }
+    },
+    {
       "identity" : "swiftlintplugins",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
@@ -56,5 +64,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
