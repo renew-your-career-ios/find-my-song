@@ -1,24 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FindMySong" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wLA-8W-4Bt">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Pa-4o-EkQ" userLabel="TopView">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="409"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FY1-0q-bKK" userLabel="TitleView">
+                                                <rect key="frame" x="102.66666666666667" y="220.66666666666666" width="187.66666666666663" height="38.333333333333343"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="find my" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tt7-Hy-m6U">
+                                                        <rect key="frame" x="0.0" y="0.0" width="107.33333333333333" height="38.333333333333336"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBf-Ct-O8h">
+                                                        <rect key="frame" x="115.33333333333334" y="0.0" width="72.333333333333343" height="38.333333333333336"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                        <color key="textColor" red="0.50196078430000002" green="0.10980392160000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="FY1-0q-bKK" firstAttribute="centerX" secondItem="3Pa-4o-EkQ" secondAttribute="centerX" id="Nv8-4i-x8o"/>
+                                            <constraint firstAttribute="bottom" secondItem="FY1-0q-bKK" secondAttribute="bottom" constant="150" id="sbE-g7-wMO"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUP-Ub-1Iy" userLabel="BottomView">
+                                        <rect key="frame" x="0.0" y="409" width="393" height="409"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTc-76-4kP">
+                                                <rect key="frame" x="50" y="271" width="293" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="ng8-7z-bhw"/>
+                                                </constraints>
+                                                <inset key="contentEdgeInsets" minX="14" minY="20" maxX="14" maxY="20"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Login with Spotify" cornerStyle="capsule" titleAlignment="center">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="baseBackgroundColor" red="0.11764705882352941" green="0.84313725490196079" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
+                                                </buttonConfiguration>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="60"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login Later" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjc-L4-lqA">
+                                                <rect key="frame" x="50" y="335" width="293" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Lu1-tu-GLo"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.50196078431372548" green="0.10980392156862745" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="aTc-76-4kP" firstAttribute="centerX" secondItem="QUP-Ub-1Iy" secondAttribute="centerX" id="C6T-WT-x31"/>
+                                            <constraint firstAttribute="bottom" secondItem="aTc-76-4kP" secondAttribute="top" constant="138" id="GHu-WN-2zM"/>
+                                            <constraint firstItem="vjc-L4-lqA" firstAttribute="centerX" secondItem="QUP-Ub-1Iy" secondAttribute="centerX" id="R5g-Sg-ySt"/>
+                                            <constraint firstItem="aTc-76-4kP" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QUP-Ub-1Iy" secondAttribute="leading" constant="50" id="RiY-bY-QWH"/>
+                                            <constraint firstItem="vjc-L4-lqA" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QUP-Ub-1Iy" secondAttribute="leading" constant="50" id="ZaF-yT-du4"/>
+                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="vjc-L4-lqA" secondAttribute="trailing" constant="50" id="fRm-gj-1p7"/>
+                                            <constraint firstItem="vjc-L4-lqA" firstAttribute="top" secondItem="aTc-76-4kP" secondAttribute="bottom" constant="14" id="gKa-zS-0K2"/>
+                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="aTc-76-4kP" secondAttribute="trailing" constant="50" id="saH-ku-FDR"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="QUP-Ub-1Iy" firstAttribute="top" secondItem="3Pa-4o-EkQ" secondAttribute="bottom" id="574-SB-8yv"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Pa-4o-EkQ" secondAttribute="trailing" id="C7L-WO-egV"/>
+                                    <constraint firstItem="3Pa-4o-EkQ" firstAttribute="top" secondItem="wLA-8W-4Bt" secondAttribute="top" id="D4s-1l-Crb"/>
+                                    <constraint firstAttribute="bottom" secondItem="QUP-Ub-1Iy" secondAttribute="bottom" id="ISE-d0-Coa"/>
+                                    <constraint firstItem="3Pa-4o-EkQ" firstAttribute="leading" secondItem="wLA-8W-4Bt" secondAttribute="leading" id="Pfa-SD-icn"/>
+                                    <constraint firstItem="QUP-Ub-1Iy" firstAttribute="leading" secondItem="wLA-8W-4Bt" secondAttribute="leading" id="Yly-O2-Y2H"/>
+                                    <constraint firstAttribute="trailing" secondItem="QUP-Ub-1Iy" secondAttribute="trailing" id="gUR-2j-gPQ"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wLA-8W-4Bt" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="XLU-C7-SKZ"/>
+                            <constraint firstItem="wLA-8W-4Bt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YHV-eR-fhZ"/>
+                            <constraint firstItem="wLA-8W-4Bt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="hse-IF-mca" userLabel="Stack View.top = top"/>
+                            <constraint firstItem="wLA-8W-4Bt" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uBP-mF-IM2"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginLaterButton" destination="vjc-L4-lqA" id="j0V-AA-bJ1"/>
+                        <outlet property="loginWithSpotifyButton" destination="aTc-76-4kP" id="FhI-SW-pEU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="112.8" y="-28.335832083958024"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
