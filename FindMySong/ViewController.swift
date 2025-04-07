@@ -73,24 +73,23 @@ class ViewController: UIViewController {
     
     func setupButtonsView () -> UIView {
         let buttonsView = UIView()
-        let loginWithSpotifyButton = UIButton(type: .system)
-        
-        loginWithSpotifyButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        loginWithSpotifyButton.setTitle(Constants.LoginPage.Text.loginWithSpotify, for: .normal)
-        loginWithSpotifyButton.setTitleColor(.black, for: .normal)
-        loginWithSpotifyButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .bold)
-        loginWithSpotifyButton.backgroundColor = UIColor(named: Constants.LoginPage.Color.loginGreen)
-        loginWithSpotifyButton.layer.cornerRadius = 24
         
         
-        let loginLaterButton = UIButton(type: .system)
+        let loginWithSpotifyButton = setupButton(
+                title: Constants.LoginPage.Text.loginWithSpotify,
+                titleColor: .black,
+                backgroundColor: UIColor(named: Constants.LoginPage.Color.loginGreen),
+                font: .systemFont(ofSize: 17, weight: .bold),
+                cornerRadius: 24
+            )
         
-        loginLaterButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        loginLaterButton.setTitle(Constants.LoginPage.Text.loginLater, for: .normal)
-        loginLaterButton.setTitleColor(UIColor(named: Constants.LoginPage.Color.loginPurple), for: .normal)
-        loginLaterButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
+        let loginLaterButton = setupButton(
+                title: Constants.LoginPage.Text.loginLater,
+                titleColor: UIColor(named: Constants.LoginPage.Color.loginPurple)!,
+                backgroundColor: nil,
+                font: .systemFont(ofSize: 17, weight: .regular),
+                cornerRadius: nil
+            )
         
         
         buttonsView.addSubview(loginWithSpotifyButton)
@@ -98,7 +97,6 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             loginWithSpotifyButton.centerXAnchor.constraint(equalTo: buttonsView.centerXAnchor),
-            loginLaterButton.centerYAnchor.constraint(equalTo: buttonsView.centerYAnchor),
             loginWithSpotifyButton.widthAnchor.constraint(equalToConstant: 336),
             loginWithSpotifyButton.heightAnchor.constraint(equalToConstant: 50),
             
@@ -111,6 +109,24 @@ class ViewController: UIViewController {
         ])
         
         return buttonsView
+    }
+    
+    func setupButton(title: String, titleColor: UIColor, backgroundColor: UIColor?, font: UIFont, cornerRadius: CGFloat?) -> UIButton {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(titleColor, for: .normal)
+        button.titleLabel?.font = font
+        
+        if let backgroundColor = backgroundColor {
+            button.backgroundColor = backgroundColor
+        }
+        
+        if let cornerRadius = cornerRadius {
+            button.layer.cornerRadius = cornerRadius
+        }
+
+        return button
     }
 }
 
