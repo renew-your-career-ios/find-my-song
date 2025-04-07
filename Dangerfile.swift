@@ -42,7 +42,9 @@ struct Grader {
         for commit in commits {
             let commitMessage = commit.message
             guard let regex = conventionalCommitRegex, !commitMessage.ranges(of: regex).isEmpty else {
-                danger.warn("O commit '\(commitMessage)' não segue as diretrizes do conventionalcommits.org.")
+                if !commitMessage.lowercased().contains("merge") {
+                    danger.warn("O commit '\(commitMessage)' não segue as diretrizes do conventionalcommits.org.")
+                }
                 continue
             }
         }
