@@ -8,8 +8,16 @@
 struct Constants {
     
     struct LoginPage {
-        static let title = "find my Song"
-        static let songRange = "Song"
-        static let songColor = "SongColor"
+        static let range = "Song"
+        
+        struct Text {
+            static let title = "find my Song"
+            static let loginWithSpotify = "Login with Spotify"
+            static let loginLater = "Login Later"
+        }
+        struct Color {
+            static let loginGreen = "LoginWithSpotifyColor"
+            static let loginPurple = "SongColor"
+        }
     }
 }
