@@ -14,7 +14,7 @@ struct Grader {
         if danger.git.modifiedFiles.filter({$0 == "Package.swift"}).first != nil {
             danger.warn("A modificação não solicitada do arquivo Package.swift é desencorajada.")
         }
-        guard danger.git.modifiedFiles.filter({$0 == "CODEOWNERS"}).first != nil else {
+        guard danger.git.modifiedFiles.filter({$0 == "CODEOWNERS"}).first == nil else {
             danger.fail("A modificação do arquivo CODEOWNERS é proibida.")
             return
         }
