@@ -8,7 +8,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,44 +46,16 @@ class ViewController: UIViewController {
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
         
         titleView.addSubview(titleStackView)
-        
-        // Title Label - find my Song
-        let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.numberOfLines = 0
-        titleLabel.textAlignment = .center
-        
-        view.addSubview(titleLabel)
-                
-        let titleText = "find my Song"
-        let attributedString = NSMutableAttributedString(string: titleText)
-                
-        // UIColor for #801CD6
-        let purpleColor = UIColor(
-            red: 0.50,
-            green: 0.11,
-            blue: 0.84,
-            alpha: 1.0
-        )
-        
-        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: (titleText as NSString).range(of: "find my"))
-        attributedString.addAttribute(.foregroundColor, value: purpleColor, range: (titleText as NSString).range(of: "Song"))
-        
-        attributedString.addAttribute(.font, value:  UIFont.systemFont(ofSize: 32, weight: .semibold), range: (titleText as NSString).range(of: "find my"))
-        attributedString.addAttribute(.font, value:  UIFont.systemFont(ofSize: 32, weight: .regular), range: (titleText as NSString).range(of: "Song"))
-     
-                
-        titleLabel.attributedText = attributedString
                 
         // Constraints for the Title Label
         NSLayoutConstraint.activate([
-        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
-        titleStackView.addArrangedSubview(titleLabel)
+        titleStackView.addArrangedSubview(containerView)
         
         // Constraints for the Title Stack View
         NSLayoutConstraint.activate([
@@ -132,6 +108,89 @@ class ViewController: UIViewController {
             loginLaterButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -65),
             loginLaterButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+    }
+
+    private func setupTextWithGradient() {
+        containerView.subviews.forEach { $0.removeFromSuperview() }
+        containerView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        
+        let fullText = "find my Song"
+        let prefix = "find my "
+        let gradientText = "Song"
+        let font = UIFont.systemFont(ofSize: 32, weight: .regular)
+        
+        let prefixSize = (prefix as NSString).size(withAttributes: [.font: font])
+        let gradientSize = (gradientText as NSString).size(withAttributes: [.font: font])
+        let totalSize = (fullText as NSString).size(withAttributes: [.font: font])
+        
+        let textLabel = UILabel()
+        textLabel.text = fullText
+        textLabel.font = font
+        textLabel.textColor = .clear
+        textLabel.frame = CGRect(
+            x: (containerView.bounds.width - totalSize.width) / 2,
+            y: 0,
+            width: totalSize.width,
+            height: containerView.bounds.height
+        )
+        containerView.addSubview(textLabel)
+        
+        let blackTextLabel = UILabel()
+        blackTextLabel.text = prefix
+        blackTextLabel.font = font
+        blackTextLabel.textColor = .black
+        blackTextLabel.frame = CGRect(
+            x: textLabel.frame.origin.x,
+            y: 0,
+            width: prefixSize.width,
+            height: containerView.bounds.height
+        )
+        containerView.addSubview(blackTextLabel)
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor(hex: "#801CD6").cgColor,
+            UIColor(hex: "#D61C70").cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientLayer.frame = CGRect(
+            x: textLabel.frame.origin.x + prefixSize.width,
+            y: 0,
+            width: gradientSize.width,
+            height: containerView.bounds.height
+        )
+        
+        let textMask = CATextLayer()
+        textMask.string = gradientText
+        textMask.font = font
+        textMask.fontSize = font.pointSize
+        textMask.frame = CGRect(
+            x: 0,
+            y: (containerView.bounds.height - gradientSize.height) / 2,
+            width: gradientSize.width,
+            height: gradientSize.height
+        )
+        textMask.foregroundColor = UIColor.black.cgColor
+        
+        gradientLayer.mask = textMask
+        containerView.layer.addSublayer(gradientLayer)
     }
 }
 
+extension UIColor {
+    convenience init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt64()
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default: (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r)/255, green: CGFloat(g)/255, blue: CGFloat(b)/255, alpha: CGFloat(a)/255)
+    }
+}
