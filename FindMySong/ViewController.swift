@@ -3,7 +3,6 @@
 //  FindMySong
 //
 //  Created by saulo.santos.freire on 26/03/25.
-//  Updated by watson.matos on 07/04/25.
 //
 
 import UIKit
