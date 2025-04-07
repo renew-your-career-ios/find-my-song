@@ -14,7 +14,7 @@ struct Grader {
         if danger.git.modifiedFiles.filter({$0 == "Package.swift"}).first != nil {
             danger.warn("A modificação não solicitada do arquivo Package.swift é desencorajada.")
         }
-        guard danger.git.modifiedFiles.filter({$0 == "CODEOWNERS"}).first != nil else {
+        guard danger.git.modifiedFiles.filter({$0 == "CODEOWNERS"}).first == nil else {
             danger.fail("A modificação do arquivo CODEOWNERS é proibida.")
             return
         }
@@ -42,7 +42,9 @@ struct Grader {
         for commit in commits {
             let commitMessage = commit.message
             guard let regex = conventionalCommitRegex, !commitMessage.ranges(of: regex).isEmpty else {
-                danger.warn("O commit '\(commitMessage)' não segue as diretrizes do conventionalcommits.org.")
+                if !commitMessage.lowercased().contains("merge") {
+                    danger.warn("O commit '\(commitMessage)' não segue as diretrizes do conventionalcommits.org.")
+                }
                 continue
             }
         }
