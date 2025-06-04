@@ -16,7 +16,6 @@ A proposta é construirmos um aplicativo que nos permite buscar e encontrar mús
 
 4. Assine a linha abaixo, com o seu linkedin, para facilitar o rastreio do projeto:
 
-[Gabriela Nogueira](https://www.linkedin.com/in/gabriela-nogueira-dev/)
-[Watson Trovati Matos](https://www.linkedin.com/in/watson-trovati-matos-51052168/)
+[Seu Nome e Sobrenome](https://www.linkedin.com/in/sua-url/)
 
 ---
