@@ -1,3 +1,12 @@
+//
+//  UIColor+Hex.swift
+//  FindMySong
+//
+//  Created by nogueiragabriela
+//  Edited by freirezinho on 04/06/25.
+//
+import UIKit
+
 extension UIColor {
     convenience init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

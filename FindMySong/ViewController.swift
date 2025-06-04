@@ -8,17 +8,18 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
         
-        // Main Stack View (Vertical)
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
         mainStackView.distribution = .fillEqually
@@ -27,7 +28,6 @@ class ViewController: UIViewController {
         
         view.addSubview(mainStackView)
         
-        // Constraints for the Main Stack View
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -35,44 +35,40 @@ class ViewController: UIViewController {
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        // Title View (Top View)
         let titleView = UIView()
         titleView.backgroundColor = .systemBackground
         titleView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Stack View inside of the Title View
         let titleStackView = UIStackView()
+        titleStackView.axis = .horizontal
         titleStackView.spacing = 0.43
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
         
         titleView.addSubview(titleStackView)
-                
-        // Constraints for the Title Label
-        NSLayoutConstraint.activate([
-        containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
-        
+        titleStackView.isLayoutMarginsRelativeArrangement = true
+        titleStackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         titleStackView.addArrangedSubview(containerView)
         
-        // Constraints for the Title Stack View
+        NSLayoutConstraint.activate([
+            containerView.heightAnchor.constraint(equalToConstant: 50),
+            containerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 300),
+        ])
+        
         NSLayoutConstraint.activate([
             titleStackView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor),
-            titleStackView.bottomAnchor.constraint(equalTo: titleView.bottomAnchor, constant: -150)
+            titleStackView.bottomAnchor.constraint(equalTo: titleView.bottomAnchor, constant: -150),
+            titleStackView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor, constant: 16),
+            titleStackView.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -16),
         ])
         
         mainStackView.addArrangedSubview(titleView)
         
-        // Buttons View (Bottom View)
         let buttonsView = UIView()
         buttonsView.backgroundColor = .systemBackground
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         
         mainStackView.addArrangedSubview(buttonsView)
         
-        // Login with Spotify Button
         let loginWithSpotifyButton = UIButton(type: .system)
         loginWithSpotifyButton.setTitle("Login with Spotify", for: .normal)
         loginWithSpotifyButton.accessibilityLabel = "Login with Spotify"
@@ -85,7 +81,7 @@ class ViewController: UIViewController {
         
         buttonsView.addSubview(loginWithSpotifyButton)
         
-        // Login Later Button
+        let purpleColor = UIColor(red: 0.50, green: 0.11, blue: 0.84, alpha: 1.0)
         let loginLaterButton = UIButton(type: .system)
         loginLaterButton.setTitle("Login Later", for: .normal)
         loginLaterButton.accessibilityLabel = "Login Later"
@@ -96,7 +92,6 @@ class ViewController: UIViewController {
         
         buttonsView.addSubview(loginLaterButton)
         
-        // Constraints for the Buttons
         NSLayoutConstraint.activate([
             loginWithSpotifyButton.leadingAnchor.constraint(equalTo: buttonsView.leadingAnchor, constant: 50),
             loginWithSpotifyButton.trailingAnchor.constraint(equalTo: buttonsView.trailingAnchor, constant: -50),
@@ -108,7 +103,12 @@ class ViewController: UIViewController {
             loginLaterButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -65),
             loginLaterButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        containerView.layoutIfNeeded()
+        setupTextWithGradient()
     }
 
     private func setupTextWithGradient() {
@@ -134,6 +134,7 @@ class ViewController: UIViewController {
             width: totalSize.width,
             height: containerView.bounds.height
         )
+        
         containerView.addSubview(textLabel)
         
         let blackTextLabel = UILabel()
@@ -146,6 +147,7 @@ class ViewController: UIViewController {
             width: prefixSize.width,
             height: containerView.bounds.height
         )
+        
         containerView.addSubview(blackTextLabel)
         
         let gradientLayer = CAGradientLayer()
@@ -162,6 +164,7 @@ class ViewController: UIViewController {
             height: containerView.bounds.height
         )
         
+        
         let textMask = CATextLayer()
         textMask.string = gradientText
         textMask.font = font
@@ -173,24 +176,10 @@ class ViewController: UIViewController {
             height: gradientSize.height
         )
         textMask.foregroundColor = UIColor.black.cgColor
+        textMask.contentsScale = UIScreen.main.scale
         
         gradientLayer.mask = textMask
         containerView.layer.addSublayer(gradientLayer)
     }
 }
 
-extension UIColor {
-    convenience init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int = UInt64()
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8: (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-        default: (a, r, g, b) = (255, 0, 0, 0)
-        }
-        self.init(red: CGFloat(r)/255, green: CGFloat(g)/255, blue: CGFloat(b)/255, alpha: CGFloat(a)/255)
-    }
-}
