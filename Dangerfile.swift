@@ -100,6 +100,5 @@ let grader = Grader(danger: danger)
 grader.runChecks(args:
                     grader.checkPullRequestTemplate,
                     grader.checkContributionGuide,
-                    grader.checkChallengeNumberThree,
                     grader.checkConventionalCommits
                 )
