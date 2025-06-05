@@ -1,11 +1,9 @@
 //
-//  ViewController.swift
-//  FindMySong
-//
 //  Created by saulo.santos.freire on 26/03/25.
 //
 
 import UIKit
+import SafariServices
 
 class ViewController: UIViewController {
     
@@ -17,7 +15,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .systemBackground
         
         let mainStackView = UIStackView()
@@ -78,6 +76,8 @@ class ViewController: UIViewController {
         loginWithSpotifyButton.tintColor = .black
         loginWithSpotifyButton.layer.cornerRadius = 25
         loginWithSpotifyButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        loginWithSpotifyButton.addTarget(self, action: #selector(onLoginWithSpotifyPressed), for: .touchUpInside)
         
         buttonsView.addSubview(loginWithSpotifyButton)
         
@@ -181,5 +181,12 @@ class ViewController: UIViewController {
         gradientLayer.mask = textMask
         containerView.layer.addSublayer(gradientLayer)
     }
+    
+    //  MARK:  Button Methods
+    @objc private func onLoginWithSpotifyPressed() {
+        let webVC = SpotifyWebViewController()
+        let nav = UINavigationController(rootViewController: webVC)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
+    }
 }
-
