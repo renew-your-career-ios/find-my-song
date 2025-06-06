@@ -5,12 +5,19 @@
 import UIKit
 import SafariServices
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
     
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.hidesWhenStopped = true
+        return spinner
     }()
     
     override func viewDidLoad() {
@@ -31,6 +38,12 @@ class ViewController: UIViewController {
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        view.addSubview(spinner)
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
         let titleView = UIView()
@@ -185,8 +198,48 @@ class ViewController: UIViewController {
     //  MARK:  Button Methods
     @objc private func onLoginWithSpotifyPressed() {
         let webVC = SpotifyWebViewController()
+        webVC.delegate = self
+        
         let nav = UINavigationController(rootViewController: webVC)
         nav.modalPresentationStyle = .formSheet
         present(nav, animated: true)
+    }
+    
+    // MARK: Webview Protocol
+    func spotifyWebViewController(_ controller: SpotifyWebViewController, didReceiveCode code: String) {
+        guard !code.isEmpty else {
+            print("Empty code")
+            return
+        }
+        
+        fetchTokens(with: code)
+    }
+    
+    private func fetchTokens(with code: String) {
+        spinner.startAnimating()
+        
+        Task {
+            defer {
+                spinner.stopAnimating()
+            }
+            
+            do {
+                let (accessToken, refreshToken) = try await SpotifyService.shared.requestAccessToken(withCode: code)
+                handleSuccessfulLogin(accessToken: accessToken, refreshToken: refreshToken)
+            } catch {
+                handleLoginError(error)
+            }
+        }
+    }
+
+    private func handleSuccessfulLogin(accessToken: String, refreshToken: String) {
+        print("✅ Access Token: \(accessToken)")
+        print("🔁 Refresh Token: \(refreshToken)")
+        // Salvar no Keychain, navegar, etc.
+    }
+
+    private func handleLoginError(_ error: Error) {
+        print("❌ Erro ao fazer login com Spotify: \(error)")
+        // AlertController opcional para feedback
     }
 }
