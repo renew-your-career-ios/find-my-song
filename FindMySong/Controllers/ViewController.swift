@@ -7,6 +7,7 @@ import SafariServices
 
 class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
     
+    //MARK: Computed properties
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -20,6 +21,33 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
         return spinner
     }()
     
+    private var biometricPromptAlert: UIAlertController {
+        let alert = UIAlertController(
+            title: "Usar biometria?",
+            message: "Você deseja usar biometria para logar da próxima vez?",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Não", style: .cancel))
+
+        alert.addAction(UIAlertAction(title: "Sim", style: .default) { _ in
+            UserDefaults.standard.set(true, forKey: "prefersBiometricAuthentication")
+        })
+
+        return alert
+    }
+    
+    private var loginErrorAlert: UIAlertController {
+        let alert = UIAlertController(
+            title: "Não foi possível logar",
+            message: "Tente novamente mais tarde",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        return alert
+    }
+    
+    // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -215,6 +243,7 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
         fetchTokens(with: code)
     }
     
+    //MARK: Login methods
     private func fetchTokens(with code: String) {
         spinner.startAnimating()
         
@@ -233,13 +262,25 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
     }
 
     private func handleSuccessfulLogin(accessToken: String, refreshToken: String) {
-        print("✅ Access Token: \(accessToken)")
-        print("🔁 Refresh Token: \(refreshToken)")
-        // Salvar no Keychain, navegar, etc.
+        let accessSaved = KeyChainService.create(value: accessToken, forKey: "accessToken")
+        let refreshSaved = KeyChainService.create(value: refreshToken, forKey: "refreshToken")
+        
+        guard accessSaved, refreshSaved else { return }
+    
+        navigateToSearch()
     }
 
     private func handleLoginError(_ error: Error) {
-        print("❌ Erro ao fazer login com Spotify: \(error)")
-        // AlertController opcional para feedback
+        present(loginErrorAlert, animated: true)
+    }
+    
+    private func navigateToSearch() {
+        let searchVC = SearchViewController()
+        navigationController?.pushViewController(searchVC, animated: true)
+
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.present(self.biometricPromptAlert, animated: true)
+        }
     }
 }
