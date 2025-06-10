@@ -13,6 +13,14 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private lazy var loadingView: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemBackground
+            view.isHidden = true
+            return view
+        }()
 
     private lazy var spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -68,8 +76,14 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        view.addSubview(spinner)
+        view.addSubview(loadingView)
+        loadingView.addSubview(spinner)
+        
         NSLayoutConstraint.activate([
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
@@ -245,10 +259,12 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
     
     //MARK: Login methods
     private func fetchTokens(with code: String) {
+        loadingView.isHidden = false
         spinner.startAnimating()
         
         Task {
             defer {
+                loadingView.isHidden = true
                 spinner.stopAnimating()
             }
             
