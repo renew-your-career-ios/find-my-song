@@ -19,5 +19,18 @@
 			</array>
 		</dict>
 	</dict>
+    
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fms</string>
+        </array>
+      </dict>
+    </array>
+    
+    <key>NSFaceIDUsageDescription</key>
+    <string>Será utilizado para facilitar o login, de forma mais segura e rápida</string>
 </dict>
 </plist>
