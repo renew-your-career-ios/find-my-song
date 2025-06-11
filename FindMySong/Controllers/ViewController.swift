@@ -36,7 +36,9 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
             preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Não", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Não", style: .default) { _ in
+            UserDefaults.standard.set(false, forKey: "prefersBiometricAuthentication")
+        })
 
         alert.addAction(UIAlertAction(title: "Sim", style: .default) { _ in
             UserDefaults.standard.set(true, forKey: "prefersBiometricAuthentication")
@@ -360,9 +362,12 @@ class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
         let searchVC = SearchViewController()
         navigationController?.pushViewController(searchVC, animated: true)
         
+        let hasBiometryPreference = UserDefaults.standard.bool(forKey: "prefersBiometricAuthentication")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.present(self.biometricPromptAlert, animated: true)
+        if(!hasBiometryPreference){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.present(self.biometricPromptAlert, animated: true)
+            }
         }
     }
 }
