@@ -10,7 +10,7 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    let authorizationService = AuthorizationService()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -38,10 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                let code = components.queryItems?.first(where: { $0.name == "code" })?.value {
                 print("Código de autorização recebido: \(code)")
                 
-                // Aqui você pode:
-                // - Notificar um controller via NotificationCenter
-                // - Salvar o código
-                // - Trocar por token de acesso
+                authorizationService.exchangeCodeForToken(code)
+               
             }
         }
         return true
