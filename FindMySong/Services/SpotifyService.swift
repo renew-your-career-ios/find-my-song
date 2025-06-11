@@ -113,6 +113,7 @@ final class SpotifyService {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(formatAuthorizationHeader(), forHTTPHeaderField: "Authorization")
         
         let queryParams = [
             "grant_type": "refresh_token",
@@ -122,7 +123,6 @@ final class SpotifyService {
         let queryString = self.formatQueryString(with: queryParams)
         
         request.httpBody = queryString.data(using: .utf8)
-        
         return request
     }
     
