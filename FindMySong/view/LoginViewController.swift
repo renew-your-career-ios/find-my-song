@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import SafariServices
+import LocalAuthentication
 
-class ViewController: UIViewController {
+
+class LoginViewController: UIViewController , SFSafariViewControllerDelegate{
+    
+   let authorizationService = AuthorizationService()
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -103,6 +108,30 @@ class ViewController: UIViewController {
             loginLaterButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -65),
             loginLaterButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+        
+        
+        
+        var components = URLComponents(string: "https://accounts.spotify.com/authorize")!
+        components.queryItems = [
+            URLQueryItem(name: "response_type", value: "code"),
+           URLQueryItem(name: "client_id", value: "e2fc8bf189174ef196832cf74c1126a8"),
+           URLQueryItem(name: "scope", value: "user-read-private playlist-modify-public playlist-read-public user-follow-read user-read-email"),
+           URLQueryItem(name: "redirect_uri", value: "fms://login/call-back"),
+           URLQueryItem(name: "show_dialog", value: "TRUE")
+        ]
+
+        
+        
+        
+        
+        let action = UIAction { [weak self] _ in
+       
+            self?.openSpotifyLogin()
+         
+        }
+
+        loginWithSpotifyButton.addAction(action, for: .touchUpInside)
+
     }
 
     override func viewDidLayoutSubviews() {
@@ -181,5 +210,55 @@ class ViewController: UIViewController {
         gradientLayer.mask = textMask
         containerView.layer.addSublayer(gradientLayer)
     }
+ 
+    
+    func openSpotifyLogin() {
+        guard let authURL = URL(string: "https://accounts.spotify.com/authorize?response_type=code&client_id=e2fc8bf189174ef196832cf74c1126a8&scopes=user-read-private%20playlist-modify-public%20playlist-read-public%20user-follow-read%20user-read-email&redirect_uri=fms://login/call-back&show_dialog=TRUE") else {
+            return
+        }
+
+        let safariVC = SFSafariViewController(url: authURL)
+        safariVC.delegate = self
+        present(safariVC, animated: true)
+    }
+
+     func selectBiometricPreference() {
+        let alert = UIAlertController(
+            title: "Login Com Biometria",
+            message: "Deseja usar a biometria na próxima vez?",
+            preferredStyle: .alert)
+         
+         alert.addAction(UIAlertAction(title: "Sim", style: .default, handler: { _ in
+             UserDefaults.standard.set(true, forKey: "biometricLogin")
+             //salva preferencia
+         }))
+         
+         alert.addAction(UIAlertAction(title: "Não", style: .cancel, handler: { _ in
+              //salva preferencia
+         }))
+         
+        present(alert, animated: true)
+    }
+    
+    func authenticateWithBiometricsIfNeeded() {
+        if UserDefaults.standard.bool(forKey: "biometricLogin") {
+            let context = LAContext()
+            var error: NSError?
+            
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Acesso ao Spotify") { success, error in
+                    DispatchQueue.main.async {
+                        if success {
+                            self.authorizationService.refreshAceessToken()
+                        }else{
+                            print(error?.localizedDescription ?? "Erro ao autenticar com biometria")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
+
 
