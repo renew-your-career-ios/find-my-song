@@ -21,7 +21,7 @@ class AuthorizationService {
         let bodyParams = [
             "grant_type": "authorization_code",
             "code": code,
-            "redirect_uri": "fms://logged-in/"
+            "redirect_uri": "fms://login/call-back"
         ]
         request.httpBody = bodyParams
             .map { "\($0.key)=\($0.value)" }

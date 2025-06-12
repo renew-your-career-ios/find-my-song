@@ -10,7 +10,6 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    let authorizationService = AuthorizationService()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -30,25 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        print("URL recebida: \(url.absoluteString)")
-        if url.scheme == "fms", url.host == "login", url.path == "/call-back" {
-            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-               let code = components.queryItems?.first(where: { $0.name == "code" })?.value {
-                print("Código de autorização recebido: \(code)")
-                
-                authorizationService.exchangeCodeForToken(code)
-               
-            }
-        }
-        return true
-    }
  
-}
-
-extension Notification.Name {
-    static let spotifyCallbackReceived = Notification.Name("spotfyCallbackReceived")
 }
 
 
