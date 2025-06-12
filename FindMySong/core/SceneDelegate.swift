@@ -10,12 +10,13 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let authorizationService = AuthorizationService()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
             guard let windowScene = scene as? UIWindowScene else { return }
             
             let window = UIWindow(windowScene: windowScene)
-            let rootViewController = ViewController()
+            let rootViewController = LoginViewController()
             
             window.rootViewController = rootViewController
             self.window = window
@@ -48,6 +49,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let urlContext = URLContexts.first else { return }
+        let url = urlContext.url
+        print("URL recebida : \(url.absoluteString)")
+
+        if url.scheme == "fms", url.host == "login", url.path == "/call-back" {
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+               let code = components.queryItems?.first(where: { $0.name == "code" })?.value {
+                print("Código de autorização recebido: \(code)")
+
+    
+                authorizationService.exchangeCodeForToken(code)
+            }
+        }
     }
 
 
