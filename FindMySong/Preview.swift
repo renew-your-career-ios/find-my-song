@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ViewControllerPreview: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
-        LoginViewController()
+        HomeViewController()
 }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

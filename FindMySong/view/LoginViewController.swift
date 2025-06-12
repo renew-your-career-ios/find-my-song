@@ -256,7 +256,10 @@ class LoginViewController: UIViewController , LoginPresenterDelegate, ASWebAuthe
       }
 
       func navigateToMainScreen() {
-          presenter.navigateToHome()
+          
+          let homeVC = HomeViewController()
+          navigationController?.pushViewController(homeVC, animated: true)
+
       }
 
       func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
