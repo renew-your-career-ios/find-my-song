@@ -1,20 +1,73 @@
 //
-//  ViewController.swift
-//  FindMySong
-//
 //  Created by saulo.santos.freire on 26/03/25.
 //
 
 import UIKit
+import SafariServices
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SpotifyWebViewControllerDelegate{
     
+    //MARK: Computed properties
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    private lazy var loadingView: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemBackground
+            view.isHidden = true
+            return view
+        }()
+
+    private lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.hidesWhenStopped = true
+        return spinner
+    }()
+    
+    private var biometricPromptAlert: UIAlertController {
+        let alert = UIAlertController(
+            title: "Usar biometria?",
+            message: "Você deseja usar biometria para logar da próxima vez?",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Não", style: .default) { _ in
+            UserDefaults.standard.set(false, forKey: "prefersBiometricAuthentication")
+        })
+
+        alert.addAction(UIAlertAction(title: "Sim", style: .default) { _ in
+            UserDefaults.standard.set(true, forKey: "prefersBiometricAuthentication")
+        })
+
+        return alert
+    }
+    
+    private var loginErrorAlert: UIAlertController {
+        let alert = UIAlertController(
+            title: "Não foi possível logar",
+            message: "Tente novamente mais tarde",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        return alert
+    }
+    
+    private var biometricErrorAlert: UIAlertController {
+        let alert = UIAlertController(
+            title: "Não foi possível logar",
+            message: "Houve uma falha na comunicação com o Spotify",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        return alert
+    }
+    
+    // MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +86,18 @@ class ViewController: UIViewController {
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        view.addSubview(loadingView)
+        loadingView.addSubview(spinner)
+        
+        NSLayoutConstraint.activate([
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
         let titleView = UIView()
@@ -79,6 +144,8 @@ class ViewController: UIViewController {
         loginWithSpotifyButton.layer.cornerRadius = 25
         loginWithSpotifyButton.translatesAutoresizingMaskIntoConstraints = false
         
+        loginWithSpotifyButton.addTarget(self, action: #selector(onLoginWithSpotifyPressed), for: .touchUpInside)
+        
         buttonsView.addSubview(loginWithSpotifyButton)
         
         let purpleColor = UIColor(red: 0.50, green: 0.11, blue: 0.84, alpha: 1.0)
@@ -103,6 +170,25 @@ class ViewController: UIViewController {
             loginLaterButton.bottomAnchor.constraint(equalTo: buttonsView.bottomAnchor, constant: -65),
             loginLaterButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    // MARK: viewDidAppear
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        view.backgroundColor = .systemBackground
+        
+        let hasBiometryPreference = UserDefaults.standard.bool(forKey: "prefersBiometricAuthentication")
+        
+        if(hasBiometryPreference){
+            BiometryService.shared.authenticateUser {result in
+                switch result {
+                case .success:
+                    self.handleBiometricSuccess()
+                default:
+                    self.handleLoginError()
+                }
+            }
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -181,5 +267,107 @@ class ViewController: UIViewController {
         gradientLayer.mask = textMask
         containerView.layer.addSublayer(gradientLayer)
     }
+    
+    //  MARK:  Button Methods
+    @objc private func onLoginWithSpotifyPressed() {
+        let webVC = SpotifyWebViewController()
+        webVC.delegate = self
+        
+        let nav = UINavigationController(rootViewController: webVC)
+        nav.modalPresentationStyle = .formSheet
+        present(nav, animated: true)
+    }
+    
+    // MARK: Login - Webview methods
+    func spotifyWebViewController(_ controller: SpotifyWebViewController, didReceiveCode code: String) {
+        guard !code.isEmpty else {
+            handleLoginError()
+            return
+        }
+        
+        fetchTokens(with: code)
+    }
+    
+    private func fetchTokens(with code: String) {
+        showLoading(true)
+        
+        Task {
+            defer {
+                showLoading(false)
+            }
+            
+            do {
+                let (accessToken, refreshToken) = try await SpotifyService.shared.requestAccessToken(withCode: code)
+                handleSuccessfulLogin(accessToken: accessToken, refreshToken: refreshToken)
+            } catch {
+                handleLoginError()
+            }
+        }
+    }
+    
+    // MARK: Login - Biometric methods
+    private func handleBiometricSuccess() {
+        guard let savedToken = KeyChainService.read(forKey: "refreshToken") else {
+            handleLoginError()
+            return
+        }
+        
+        fetchTokensOnRefresh(with: savedToken)
+    }
+    
+    private func fetchTokensOnRefresh(with savedToken: String) {
+        showLoading(true)
+        
+        Task {
+            defer {
+                showLoading(false)
+            }
+            
+            do {
+                let (accessToken, maybeNewRefreshToken) = try await SpotifyService.shared.refreshToken(with: savedToken)
+                handleSuccessfulLogin(accessToken: accessToken,refreshToken: maybeNewRefreshToken ?? savedToken)
+                
+            } catch {
+                handleBiometricLoginError()
+            }
+        }
+    }
+    
+    //MARK: Private helpers
+    private func handleSuccessfulLogin(accessToken: String, refreshToken: String) {
+        let accessSaved = KeyChainService.create(value: accessToken, forKey: "accessToken")
+        let refreshSaved = KeyChainService.create(value: refreshToken, forKey: "refreshToken")
+        
+        guard accessSaved, refreshSaved else { return }
+        
+        navigateToSearch()
+    }
+    
+    private func showLoading(_ show: Bool) {
+        loadingView.isHidden = !show
+        show ? spinner.startAnimating() : spinner.stopAnimating()
+    }
+    
+    //MARK: Error Alerts
+    private func handleLoginError() {
+        present(loginErrorAlert, animated: true)
+    }
+    
+    private func handleBiometricLoginError() {
+        present(biometricErrorAlert, animated: true)
+    }
+    
+    //MARK: Navigation
+    private func navigateToSearch() {
+        let searchVC = SearchViewController()
+        navigationController?.pushViewController(searchVC, animated: true)
+        
+        let hasBiometryPreference = UserDefaults.standard.bool(forKey: "prefersBiometricAuthentication")
+        
+        if(!hasBiometryPreference){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.present(self.biometricPromptAlert, animated: true)
+            }
+        }
+    }
 }
-
